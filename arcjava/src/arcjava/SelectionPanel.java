@@ -46,7 +46,17 @@ public class SelectionPanel extends JPanel {
 		// TODO: add ComboBox functionality (is this even necessary?)
 		ActionListener sComboListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				if (selectionList.getSelectedItem() == "Create New Item") {
+					selectedName.setText("");
+					selectedName.setEditable(true);
+					selectedDesc.setText("");
+					selectedDesc.setEditable(true);
+				}
+				else {
+					selectedName.setEditable(false);
+					selectedName.setText((selectionList.getSelectedItem()).toString());
+					selectedDesc.setEditable(false);
+				}
 			}		
 		};
 		
