@@ -3,6 +3,9 @@ package arcjava;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.sql.*;
+
+import arcjava.DBConnection;
 
 public class SelectionPanel extends JPanel {
 	
@@ -13,8 +16,26 @@ public class SelectionPanel extends JPanel {
 		
 		JLabel selectionLabel = new JLabel("Select Item");
 		
-		// TODO: swap out Strings for dual-String type (may have to hard code it)
-		String[] existingNames = {"F0006", "F0016WORLD", "F0101", "F01012", "F0311A"};
+		// TODO: swap out Strings for dual-String type (may have to hard code it)		
+		DBConnection.connect();
+		ResultSet rSet = DBConnection.getResultSet();
+		int querySize = DBConnection.getRSSize();
+		String[] existingNames = new String[querySize];
+		for (int i = 0; i < querySize; i++) {
+			try {
+				rSet.next();
+				existingNames[i] = rSet.getString(1);
+			} catch (SQLException e) {
+				System.out.println("ComboBox population error: " + e);
+				break;
+			}	
+		}
+		try {
+			rSet.beforeFirst();
+		}
+		catch (SQLException e) {
+			System.out.println("Error: " + e);
+		}
 		JComboBox selectionList = new JComboBox();
 		selectionList.setBackground(Color.white);
 		selectionList.addItem("");
@@ -38,12 +59,10 @@ public class SelectionPanel extends JPanel {
 		// TODO: add button functionality
 		ActionListener sButtonListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+//				DBConnection.connect();
 			}		
 		};
 		
-		
-		// TODO: add ComboBox functionality (is this even necessary?)
 		ActionListener sComboListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (selectionList.getSelectedItem() == "Create New Item") {
@@ -60,9 +79,9 @@ public class SelectionPanel extends JPanel {
 			}		
 		};
 		
+		selectionButton.addActionListener(sButtonListener);
 		selectionList.addActionListener(sComboListener);
 
-		
 		
 		this.add(selectionLabel);
 		this.add(selectionList);

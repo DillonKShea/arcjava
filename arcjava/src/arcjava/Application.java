@@ -1,7 +1,6 @@
 package arcjava;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 import arcjava.SelectionPanel;
