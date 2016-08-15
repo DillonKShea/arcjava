@@ -75,6 +75,7 @@ public class SelectionPanel extends JPanel {
 					selectedName.setEditable(false);
 					selectedName.setText((selectionList.getSelectedItem()).toString());
 					selectedDesc.setEditable(false);
+					selectedDesc.setText(DBConnection.getDesc((selectionList.getSelectedItem()).toString()));
 				}
 			}		
 		};

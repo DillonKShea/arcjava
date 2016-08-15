@@ -73,4 +73,19 @@ public class DBConnection {
 		
 	}
 	
+	public static String getDesc (String name) {
+		try {
+			String descQuery = "SELECT Description FROM arctable WHERE Name = \"" + name + "\"";
+			Statement stmt = connection.createStatement();
+			ResultSet descSet = stmt.executeQuery(descQuery);
+			descSet.next();
+			System.out.println(descSet.getString(1));
+			return descSet.getString(1);
+		}
+		catch (SQLException e) {
+			System.out.println("Description error: " + e);
+			return null;
+		}
+	}
+	
 }
