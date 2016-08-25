@@ -1,7 +1,7 @@
 package arcjava;
 
 import java.sql.*;
-import com.mysql.*;
+import com.ibm.as400.access.*;
 
 
 public class DBConnection {
@@ -15,9 +15,9 @@ public class DBConnection {
 	
 	public DBConnection() {
 		
-		url = "jdbc:mysql://127.0.0.1:3306/arc_db";
-		user = "root";
-		pass = "";
+		url = "jdbc:as400://S1051c6e.timeshare400.com/DKS6L1";
+		user = "dks60320";
+		pass = "husky123";
 		connection = null;
 		
 	}
@@ -25,22 +25,24 @@ public class DBConnection {
 	public static void connect() {
 		try {
 			System.out.println("Attempting connection");
-			url = "jdbc:mysql://127.0.0.1:3306/arc_db";
-			user = "root";
-			pass = "";
+			url = "jdbc:as400://S1051c6e.timeshare400.com/DKS6L1";
+			user = "dks60320";
+			pass = "husky123";
+			String asDriver = "com.ibm.as400.access.AS400JDBCDriver";
+			Class.forName(asDriver);
 			connection = DriverManager.getConnection(url, user, pass);
 			System.out.println("Connection successful");
-			String query ="SELECT * FROM arctable;";
+			String query ="select * from dw21wrk";
 			Statement stmt = connection.createStatement();
 			rSet = stmt.executeQuery(query);
-			while (rSet.next()) {
-				System.out.println(rSet.getString(1) + " " + rSet.getString(2));
-			}
+//			while (rSet.next()) {
+//				System.out.println(rSet.getString(1) + " " + rSet.getString(2));
+//			}
 			rSet.beforeFirst();
 		} catch (SQLException e) {
 			System.out.println("Connection failed: " + e);
 		} catch (Exception e) {
-			System.out.println("Error: " + e);
+			System.out.println("Error2: " + e);
 		}
 	}
 	
@@ -59,7 +61,7 @@ public class DBConnection {
 	
 	public static int getRSSize() {
 		try {
-			String sizeQuery = "SELECT count(*) from arctable";
+			String sizeQuery = "select count(*) from dw21wrk";
 			Statement stmt = connection.createStatement();
 			ResultSet sizeSet = stmt.executeQuery(sizeQuery);
 			sizeSet.next();
@@ -75,7 +77,7 @@ public class DBConnection {
 	
 	public static String getDesc (String name) {
 		try {
-			String descQuery = "SELECT Description FROM arctable WHERE Name = \"" + name + "\"";
+			String descQuery = "select SPCDSC from dw21wrk where SPCNAM = \'" + name + "\'";
 			Statement stmt = connection.createStatement();
 			ResultSet descSet = stmt.executeQuery(descQuery);
 			descSet.next();

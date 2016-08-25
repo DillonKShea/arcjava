@@ -34,7 +34,7 @@ public class SelectionPanel extends JPanel {
 			rSet.beforeFirst();
 		}
 		catch (SQLException e) {
-			System.out.println("Error: " + e);
+			System.out.println("Error1: " + e);
 		}
 		JComboBox selectionList = new JComboBox();
 		selectionList.setBackground(Color.white);
