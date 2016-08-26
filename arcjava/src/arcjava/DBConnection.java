@@ -33,11 +33,12 @@ public class DBConnection {
 			connection = DriverManager.getConnection(url, user, pass);
 			System.out.println("Connection successful");
 			String query ="select * from dw21wrk";
-			Statement stmt = connection.createStatement();
+			Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_UPDATABLE);
 			rSet = stmt.executeQuery(query);
-//			while (rSet.next()) {
-//				System.out.println(rSet.getString(1) + " " + rSet.getString(2));
-//			}
+			while (rSet.next()) {
+				System.out.println(rSet.getString(1) + " " + rSet.getString(2));
+			}
 			rSet.beforeFirst();
 		} catch (SQLException e) {
 			System.out.println("Connection failed: " + e);
